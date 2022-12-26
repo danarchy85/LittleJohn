@@ -1,38 +1,86 @@
 # LittleJohn: A Server-Side Ruby Automation Framework
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/LittleJohn`. To experiment with that code, run `bin/console` for an interactive prompt.
+This automation framework is the culmination of my 2 years of work developing
+an application which automated my stock trading activity on Robinhood.
 
-TODO: Delete this and the text above, and describe your gem
+That original application streamed stock data from Robinhood's REST-API into
+MongoDB, aggregated that data into candlestick data over various time intervals,
+ran simulations on that historical data to identify ideal trading positions,
+then automatically performed live-trading during open market hours.
 
-## Installation
+The program progressed from a series of basic Ruby scripts, to more complete
+object-oriented code, and ultimately was redesigned through the development of
+this framework you see here.
 
-Add this line to your application's Gemfile:
+The primary modules of code include:
+- a MongoDB wrapper to ensure connectivity and safe error handling
+- a Collection/Model framework akin to ActiveRecord interacting with MongoDB
+- an HTTP request class to make JSON-API requests out to external APIs
+- an SMTP email sender
+- a ThreadHandler to control multi-threading through use of Ruby lambdas
+- a Daemon to fork the application with Docker container support
 
-```ruby
-gem 'LittleJohn'
+Though work still remains to be done such as proper logging, documentation, code
+cleanup, and probably additional features, I am releasing this framework publicly
+so that I can begin updating my other Open Source projects to take advantage of
+what I have built here.
+
+This is released under the MIT Open Source License to be used, copied, and modified
+as people wish. However, since it is also a display of my personal skill development
+and work, I currently do not plan to accept outside contributions. Pull-reqeusts are
+still welcome if you wish to fix/implement code and share it with others, but it will
+likely not be committed into the base repository.
+
+## Installation 
+
+**Not yet available through RubyGems; check out this code directly into your application's
+code and include it as shown in the example in lib/LittleJohn.rb**
+
+### Suggested Ruby Version ###
+
+This was committed assuming Ruby-3.0.0, though will *probably* work with 2.7 as well.
+
+### RVM Setup ###
+
+I lock my including applications with RVM and a .ruby-version and .ruby-gemset file in
+my app's top-level directory with the following (assuming the app name is 'MyApp'):
+
+```
+rvm install ruby-3.0.0
+rvm use ruby-3.0.0
+rvm gemset create MyApp
+echo '3.0.0' > .ruby-version
+echo 'MyApp' > .ruby-gemset
 ```
 
-And then execute:
+<!-- Add this line to your application's Gemfile: -->
 
-    $ bundle install
+<!-- ```ruby -->
+<!-- gem 'LittleJohn' -->
+<!-- ``` -->
 
-Or install it yourself as:
+<!-- And then execute: -->
 
-    $ gem install LittleJohn
+<!--     $ bundle install -->
+
+<!-- Or install it yourself as: -->
+
+<!--     $ gem install LittleJohn -->
 
 ## Usage
 
 TODO: Write usage instructions here
 
-## Development
+## Development/Contributing
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+This is released under the MIT Open Source License to be used, copied, and modified
+as people wish. However, since it is also a display of my personal skill development
+and work, I currently do not plan to accept outside contributions. Pull-reqeusts are
+still welcome if you wish to fix/implement code and share it with others, but it will
+likely not be committed into the base repository.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/LittleJohn.
+Please only attribute original code in this repository to Dan James, but attribute your
+own code to yourself through obvious commenting.
 
 ## License
 
