@@ -5,16 +5,15 @@ require "LittleJohn"
 
 def daemon_example
   <<~EOF
-  Daemon operations
+  Daemon operations:
+
   If building an application that manages a forked daemon, below is
    an example of what your 'bin/yourappname' executable might contain
-  for operation of the daemon.
+   for operation of the daemon.
 
+  #!/usr/bin/env ruby
   daemon = if LittleJohn.daemon
              LittleJohn::Daemon.new
-           else
-             puts 'LittleJohn currently only runs as a daemon!'
-             abort("Update '#{LittleJohn.ljdir}/config.yml' to contain a 'daemon' array\n  with either 'quotemanager', 'watchlistmanager', or both:\ndaemon:\n  - quotemanager\n  - watchlistmanager")
            end
 
   if ARGV.empty?
@@ -34,7 +33,7 @@ end
 
 if __NAME__ = $PROGRAM_NAME
   if ARGV.empty?
-    puts "LittleJohn: v#{LittleJohn::VERSION}. No argument provided!"
+    puts "LittleJohn: v#{LittleJohn::VERSION}."
     puts " Run as 'littlejohn setup' to run initial setup of MongoDB."
   elsif ARGV[0] == '--version'
     puts "LittleJohn: v#{LittleJohn::VERSION}"
@@ -42,16 +41,23 @@ if __NAME__ = $PROGRAM_NAME
     puts 'Running initial setup.'
     appname = if ! ARGV[1]
                 print 'Enter your app name (case sensitive): '
-                appname = gets.chomp
+                appname = STDIN.gets.chomp
               else
                 ARGV[1]
               end
-    module appname
-      extend LittleJohn
-      p LittleJohn.mdb
+    app = Class.new do
+      def initialize(appname)
+        self.instance_variable_set('@name', appname)
+        extend LittleJohn
+      end
+
+      def name
+        @name
+      end
     end
-  elsif ARGV[0] == 'example'
-    daemon_example
+    app.new(appname)
+  # elsif ARGV[0] == 'example'
+  #   puts daemon_example
   else
     puts "Invalid argument: #{ARGV.join(', ')}. Only 'setup' or 'example' arguments are valid."
   end
