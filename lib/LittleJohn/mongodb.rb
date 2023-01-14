@@ -6,6 +6,21 @@ module LittleJohn
   class MongoDB
     attr_reader :client
 
+    ##
+    # MongoDB Config:
+    #   app.config['mongodb'] = {
+    #     'hosts' => ['127.0.0.1:27017'],
+    #     'settings' => {
+    #       # required settings
+    #       'database' => 'db_name',
+    #       'user'     => 'db_user',
+    #       'password' => 'db_pass
+    #       # extra settings may be added here, for example:
+    #       'max_pool_size' => 25
+    #     }
+    #   }
+    #
+
     def initialize(config=nil)
       return nil if config.nil?
       load_mongodb_config(config)

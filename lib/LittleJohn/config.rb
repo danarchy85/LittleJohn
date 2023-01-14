@@ -24,6 +24,11 @@ module LittleJohn
       load_smtp
     end
 
+    # def save_config
+    #   File.write(@cfgfile, @config.to_yaml)
+    #   load_config
+    # end
+
     private
     def load_config
       @cfgdir = File.realpath(ENV['HOME']) + '/.' + self.name.downcase
@@ -34,7 +39,6 @@ module LittleJohn
       File.exist?(@cfgfile) || File.write(@cfgfile, Hash.new.to_yaml)
 
       @config = YAML.load_file(@cfgfile)
-      p @config
       @config['env'] ||= nil
       Helpers.parse_attributes(self, @config, ['mongodb'])
     end

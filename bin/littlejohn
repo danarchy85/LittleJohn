@@ -3,33 +3,33 @@
 require "bundler/setup"
 require "LittleJohn"
 
-def daemon_example
-  <<~EOF
-  Daemon operations:
+# def daemon_example
+#   <<~EOF
+#   Daemon operations:
 
-  If building an application that manages a forked daemon, below is
-   an example of what your 'bin/yourappname' executable might contain
-   for operation of the daemon.
+#   If building an application that manages a forked daemon, below is
+#    an example of what your 'bin/yourappname' executable might contain
+#    for operation of the daemon.
 
-  #!/usr/bin/env ruby
-  daemon = if LittleJohn.daemon
-             LittleJohn::Daemon.new
-           end
+#   #!/usr/bin/env ruby
+#   daemon = if LittleJohn.daemon
+#              LittleJohn::Daemon.new
+#            end
 
-  if ARGV.empty?
-    daemon.status
-  elsif ARGV[0] == 'start'
-    daemon.start
-  elsif ARGV[0] == 'stop'
-    daemon.stop
-  elsif ARGV[0] == 'restart'
-    daemon.stop
-    daemon.start
-  else
-    puts "Invalid argument: #{ARGV.join(', ')}. Only 'stop', 'restart', or no argument is valid."
-  end
-  EOF
-end
+#   if ARGV.empty?
+#     daemon.status
+#   elsif ARGV[0] == 'start'
+#     daemon.start
+#   elsif ARGV[0] == 'stop'
+#     daemon.stop
+#   elsif ARGV[0] == 'restart'
+#     daemon.stop
+#     daemon.start
+#   else
+#     puts "Invalid argument: #{ARGV.join(', ')}. Only 'stop', 'restart', or no argument is valid."
+#   end
+#   EOF
+# end
 
 if __NAME__ = $PROGRAM_NAME
   if ARGV.empty?
@@ -56,9 +56,8 @@ if __NAME__ = $PROGRAM_NAME
       end
     end
     app.new(appname)
-  # elsif ARGV[0] == 'example'
-  #   puts daemon_example
+    p app.mdb.client
   else
-    puts "Invalid argument: #{ARGV.join(', ')}. Only 'setup' or 'example' arguments are valid."
+    puts "Invalid argument: #{ARGV.join(', ')}. Only 'setup' is a valid argument."
   end
 end
