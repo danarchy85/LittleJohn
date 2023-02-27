@@ -15,6 +15,7 @@ module LittleJohnTester
     end
 
     def test_that_lj_mongodb_active
+      p LittleJohnTester.mdb.client.cluster.servers
       LittleJohnTester.mdb.client.cluster.servers.any?
     end
   end

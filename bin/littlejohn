@@ -31,6 +31,21 @@ require "LittleJohn"
 #   EOF
 # end
 
+def initialize_app(appname)
+  app = Module.new do
+    def self.new(appname)
+      self.instance_variable_set('@name', appname)
+      extend LittleJohn
+    end
+
+    def self.name
+      @name
+    end
+  end
+  app.new(appname)
+  app
+end
+
 if __NAME__ = $PROGRAM_NAME
   if ARGV.empty?
     puts "LittleJohn: v#{LittleJohn::VERSION}."
@@ -45,17 +60,8 @@ if __NAME__ = $PROGRAM_NAME
               else
                 ARGV[1]
               end
-    app = Class.new do
-      def initialize(appname)
-        self.instance_variable_set('@name', appname)
-        extend LittleJohn
-      end
-
-      def name
-        @name
-      end
-    end
-    app.new(appname)
+    app = initialize_app(appname)
+    p app.methods
     p app.mdb.client
   else
     puts "Invalid argument: #{ARGV.join(', ')}. Only 'setup' is a valid argument."

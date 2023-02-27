@@ -11,5 +11,25 @@ require "LittleJohn"
 # require "pry"
 # Pry.start
 
+appname = if ! ARGV[0]
+            print 'Enter your app name (case sensitive): '
+            appname = STDIN.gets.chomp
+          else
+            ARGV[0]
+          end
+
+app = Module.new do
+  def self.new(appname)
+    self.instance_variable_set('@name', appname)
+    extend LittleJohn
+  end
+
+  def self.name
+    @name
+  end
+end
+app.new(appname)
+ARGV.shift # Reset to empty ARGV for __FILE__
+
 require "irb"
 IRB.start(__FILE__)
