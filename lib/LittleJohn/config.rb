@@ -44,7 +44,7 @@ module LittleJohn
     end
 
     def load_mongodb
-      @mdb = MongoDB.new(@config['mongodb'])
+      @mdb = @config['mongodb'] ? MongoDB.new(@config['mongodb']) : nil
     end
 
     def load_http
@@ -52,7 +52,7 @@ module LittleJohn
     end
 
     def load_smtp
-      @smtp = SMTP.new(@config['smtp'])
+      @smtp = @config['smtp'] ? SMTP.new(@config['smtp']) : nil
     end
   end
 end

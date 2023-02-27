@@ -7,7 +7,7 @@ module LittleJohn
     attr_reader :message
     attr_reader :variables
 
-    def initialize(config)
+    def initialize(config=nil)
       return nil if config.nil?
       load_smtp_config(config)
     end
@@ -46,11 +46,13 @@ module LittleJohn
 
       begin
         i += 1
+        @verifytls = self.instance_variable_defined?('@verifytls') ? @verifytls : true
         smtp.enable_starttls if @starttls
-        smtp.start('littlejohn.danarchy.me',
+        smtp.start(@hostname,
                    @username,
                    @password,
-                   @auth_method)
+                   @auth_method,
+                   tls_verify: @verifytls)
         smtp.send_message(@message,
                           @variables['femail'],
                           @variables['temail'])

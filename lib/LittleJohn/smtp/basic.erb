@@ -1,0 +1,11 @@
+From: <%= @variables['from'] %>
+To: <%= @variables['to'] %>
+Subject: <%= @variables['subject'] %>
+
+<% if @variables['tname'] %>
+Hello <%= @variables['tname'] %>,
+<% else %>
+Hello,
+<% end %>
+<%= @variables['body'] %>
+
