@@ -9,7 +9,6 @@ require_relative "LittleJohn/http"
 
 # require_relative "LittleJohn/daemon"
 # require_relative "LittleJohn/threadhandler"
-# require_relative "LittleJohn/version"
 
 ## LittleJohn App Framework
 # Extend your application with LittleJohn and its
