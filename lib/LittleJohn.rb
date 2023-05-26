@@ -6,9 +6,9 @@ require_relative "LittleJohn/helpers"
 require_relative "LittleJohn/mongodb"
 require_relative "LittleJohn/smtp"
 require_relative "LittleJohn/http"
+require_relative "LittleJohn/threadhandler"
 
 # require_relative "LittleJohn/daemon"
-# require_relative "LittleJohn/threadhandler"
 
 ## LittleJohn App Framework
 # Extend your application with LittleJohn and its
