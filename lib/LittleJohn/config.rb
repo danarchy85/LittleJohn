@@ -5,7 +5,7 @@ module LittleJohn
   module Config
     attr_reader :cfgdir
     attr_reader :cfgfile
-    attr_reader :log
+    attr_reader :logger
     attr_reader :debug
     attr_reader :mdb
     attr_reader :http
@@ -45,10 +45,25 @@ module LittleJohn
     end
 
     def load_logs
-      logdir = @cfgdir + '/logs'
+      @config['logger'] ||= Hash.new
+      logdir  = @cfgdir + '/logs'
+      logfile = @config['logger']['log_file']
       Dir.exist?(logdir) || Dir.mkdir(logdir)
-      @log = Logger.new(logdir + "/#{self.name.downcase}.log")
-      @log.formatter = proc do |severity, datetime, progname, msg|
+
+      logdev = if ! logfile || logfile == 'STDOUT'
+                 puts 'STDOUT'
+                 STDOUT
+               elsif logfile == true
+                 logdir + "/#{self.name.downcase}.log"
+               else
+                 logdir + '/' + @config['logger']['log_file']
+               end
+
+      puts "Logging to: #{logdev}"
+      log_age  = @config['logger']['log_age']  || 'daily'
+      log_size = @config['logger']['log_size'] || 1048576
+      @logger = Logger.new(logdev, shift_age = log_age, shift_size = log_size)
+      @logger.formatter = proc do |severity, datetime, progname, msg|
         "{ \"datetime\": \"#{datetime}\", \"level\": \"#{severity}\", \"message\": \"#{msg}\" }\n"
       end
     end

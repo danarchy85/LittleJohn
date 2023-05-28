@@ -31,5 +31,6 @@ end
 app.new(appname)
 ARGV.shift # Reset to empty ARGV for __FILE__
 
+puts 'Initiating console... '
 require "irb"
 IRB.start(__FILE__)
