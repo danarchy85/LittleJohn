@@ -24,7 +24,11 @@ module LittleJohn
       path = File.dirname(__FILE__) + '/smtp/'
       source = path + template + '.erb'
 
-      @message = ERB.new(File.read(source), nil, '-').result(binding)
+      @message = if RUBY_VERSION >= '2.6'
+                 ERB.new(File.read(source), trim_mode: '-').result(binding)
+               else
+                 ERB.new(File.read(source), nil, '-').result(binding)
+               end
     end
 
     def generate_variables(from, to, subject, body)
@@ -41,18 +45,19 @@ module LittleJohn
     end
 
     def send_message
-      smtp = Net::SMTP.new(@hostname, @port)
+      @verifytls = self.instance_variable_defined?('@verifytls') ? @verifytls : true
+      smtp = Net::SMTP.new(@hostname, @port, tls_verify: @verifytls)
       i, retries = 0, 5
 
       begin
         i += 1
-        @verifytls = self.instance_variable_defined?('@verifytls') ? @verifytls : true
+
         smtp.enable_starttls if @starttls
         smtp.start(@hostname,
                    @username,
                    @password,
-                   @auth_method,
-                   tls_verify: @verifytls)
+                   @auth_method)
+
         smtp.send_message(@message,
                           @variables['femail'],
                           @variables['temail'])
