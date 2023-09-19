@@ -63,9 +63,10 @@ EOF
 
   spec.add_development_dependency "bundler", "~> 2.4"
   spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "minitest", "~> 5.14"
+  spec.add_development_dependency "minitest", "~> 5.20"
 
-  spec.add_dependency "mongo", "2.18"
+  spec.add_dependency "net-smtp", "~> 0.3"
+  spec.add_dependency "mongo", "~> 2.19"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
